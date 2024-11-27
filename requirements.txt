@@ -5,3 +5,5 @@ matplotlib
 seaborn
 scipy
 streamlit
+# nb2xls
+folium
