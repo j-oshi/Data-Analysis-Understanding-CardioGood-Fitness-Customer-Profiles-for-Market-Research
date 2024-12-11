@@ -9,3 +9,5 @@ streamlit
 folium
 scikit-learn
 geopandas
+geopy
+pyproj
