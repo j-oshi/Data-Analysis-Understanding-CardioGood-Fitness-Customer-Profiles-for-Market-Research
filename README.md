@@ -110,4 +110,4 @@ Now, let's set up Ollama for the Streamlit application that will handle PDF uplo
 **Additional Tips:**
 
 * The `requirements.txt` file likely includes libraries for PDF handling, natural language processing (NLP), and potentially interaction with an AI model (e.g., a language model API).
-* If you encounter any errors during installation, please check the version of python used. At the time of installing the packages. version 3.13 was used.
+* If you encounter any errors during installation, please check the version of python used. At the time of installing the packages. version 3.13 was used. Also might need to install visual studio build tools from https://visualstudio.microsoft.com/visual-cpp-build-tools.
