@@ -14,6 +14,7 @@ pyproj
 langchain
 langchain-community
 langchain-ollama
+pymupdf
 # unstructured
 # pdf2image
 # pdfminer
@@ -21,6 +22,6 @@ langchain-ollama
 # onnx
 # opencv-python
 # unstructured-inference
-chromadb
+# chromadb
 
  
