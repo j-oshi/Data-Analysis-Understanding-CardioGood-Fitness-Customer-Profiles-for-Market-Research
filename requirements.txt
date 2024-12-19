@@ -14,13 +14,13 @@ pyproj
 langchain
 langchain-community
 langchain-ollama
-unstructured
-pdf2image
-pdfminer
-pdfminer.six
-onnx
-opencv-python
-unstructured-inference
+# unstructured
+# pdf2image
+# pdfminer
+# pdfminer.six
+# onnx
+# opencv-python
+# unstructured-inference
 chromadb
 
  
