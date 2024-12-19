@@ -2,15 +2,16 @@
 
 
 ```python
-import os, sys
 from langchain_community.document_loaders.csv_loader import CSVLoader
 from langchain_ollama import ChatOllama
 from langchain_ollama import OllamaEmbeddings
+from langchain.schema import Document
 from langchain_community.vectorstores import Chroma
 from langchain.prompts import ChatPromptTemplate, PromptTemplate
 from langchain.retrievers.multi_query import MultiQueryRetriever
 from langchain_core.output_parsers import StrOutputParser
 from langchain_core.runnables import RunnablePassthrough
+from langchain_text_splitters import RecursiveCharacterTextSplitter
 import pandas as pd
 
 ```
@@ -21,9 +22,9 @@ The data was acqired from https://demo.oshinit.com/pages/mortgage-calculator.htm
 
 
 ```python
-file_path = ('./data/mortage-300h-360-5.csv')
+file_path = './data/mortage-300h-360-5.csv'
 
-data = pd.read_csv(file_path, sep=';')
+data = pd.read_csv(file_path, sep=';', encoding='utf-8')
 
 data.head()
 ```
@@ -107,9 +108,45 @@ load and process data
 
 
 ```python
-loader = CSVLoader(file_path=file_path)
-docs = loader.load_and_split()
+loader = CSVLoader(
+    file_path=file_path,
+    csv_args={
+        "delimiter": ";",
+    },
+    encoding="windows-1252",
+)
+
+try:
+    docs = loader.load()
+except Exception as e:
+    print("Error during data loading:", e)
+
+text_splitter = RecursiveCharacterTextSplitter(
+    # Set a really small chunk size, just to show.
+    chunk_size=100,
+    chunk_overlap=20,
+    length_function=len,
+    is_separator_regex=False,
+)
+
+chunks = text_splitter.split_documents(docs)
+print(chunks[0])
+
+# for record in docs[:2]:
+#     print(record)
+# documents =  [Document(page_content=text) for text in docs]
+# text_splitter = RecursiveCharacterTextSplitter(chunk_size=7500, chunk_overlap=100)
+# chunks = text_splitter.split_documents(documents)
+
+
 ```
+
+    page_content='Period: 0
+    Monthly Payment: 0
+    Computed Interest Due: 0
+    Principal Due: 0
+    Principal Balance: 300000' metadata={'source': './data/mortage-300h-360-5.csv', 'row': 0}
+    
 
 
     The Kernel crashed while executing code in the current cell or a previous cell. 
@@ -128,7 +165,7 @@ docs = loader.load_and_split()
 ```python
 # Create vector database
 vector_db = Chroma.from_documents(
-    documents=docs,
+    documents=chunks,
     embedding=OllamaEmbeddings(model="mistral:latest"),
     collection_name="local-rag"
 )

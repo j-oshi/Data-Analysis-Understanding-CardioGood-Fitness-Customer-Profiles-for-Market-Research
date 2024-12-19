@@ -22,6 +22,6 @@ pymupdf
 # onnx
 # opencv-python
 # unstructured-inference
-# chromadb
+chromadb
 
  
