@@ -14,8 +14,10 @@ pyproj
 langchain
 langchain-community
 langchain-ollama
+langchain-experimental
 langgraph
 pymupdf
+tabulate
 # unstructured
 # pdf2image
 # pdfminer
